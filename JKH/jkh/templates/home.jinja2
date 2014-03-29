@@ -1,7 +1,24 @@
 {% extends 'my_template.jinja2' %}
-{% block content %}
+{% block intro %}
 
-<h1>О проекте </h1>
+    <hr>
+    <div id="intro">
+        <div class="inner">
+            <div class="wrap clearFix">
+                <h1><strong>Уважаемый посетитель нашего сайта! </strong></h1>
 
+                <h2>Мы очень рады что Вы зашли на наш сайт. Очень надеемся, что представленная здесь информация
+                    будет
+                    для
+                    Вас
+                    полезной!</h2>
+                <a href="/registration" class="button">Регистрация</a>
+                <a href="/login" class="button">Авторизация</a>
 
+            </div>
+        </div>
+    </div>
+    <!-- / #intro -->
+    <hr>
 {% endblock %}
+

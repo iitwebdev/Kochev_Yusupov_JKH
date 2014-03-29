@@ -1,6 +1,18 @@
 {% extends 'my_template.jinja2' %}
 {% block content %}
-
-
+    <form method="post">
+        <h1>Регистрация</h1>
+        <p><b class="text">Введите имя:</b><br>
+            <input type="text" class="input" size="40" name="name">
+        <p><b class="text">Введите email:</b><br>
+            <input type="text" class="input" size="40" name="email">
+        <p><b class="text">Введите пароль:</b><br>
+            <input type="password" class="input" size="40" name="password">
+            <Br><input type="submit" class="button" value="Зарегистрироваться">
+    </form>
+    {% if failed_attempt %}
+        <h3>Такой пользователь уже существует,</h3>
+        <h3>или не все поля заполнены</h3>
+    {% endif %}
 
 {% endblock %}

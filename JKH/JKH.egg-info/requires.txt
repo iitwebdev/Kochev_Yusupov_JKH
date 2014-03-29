@@ -1,0 +1,7 @@
+pyramid
+pyramid_chameleon
+pyramid_debugtoolbar
+waitress
+pyramid_jinja2
+jinja2
+SQLAlchemy
