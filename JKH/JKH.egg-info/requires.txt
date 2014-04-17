@@ -5,3 +5,4 @@ waitress
 pyramid_jinja2
 jinja2
 SQLAlchemy
+zope.sqlalchemy

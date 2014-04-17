@@ -44,6 +44,7 @@ def about_view(request):
     return {'About': u"Work!"}
 
 @view_config(route_name='user', renderer='templates/user.jinja2')
+@auth_required
 def user_view(request):
     return {'project': 'JKH'}
 

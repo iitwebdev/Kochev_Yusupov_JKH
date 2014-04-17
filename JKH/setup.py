@@ -16,18 +16,19 @@ requires = [
     'pyramid_jinja2',
     'jinja2',
     'SQLAlchemy',
-    ]
+    'zope.sqlalchemy',
+]
 
 setup(name='JKH',
       version='0.0',
       description='JKH',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
-        "Programming Language :: Python",
-        "Framework :: Pyramid",
-        "Topic :: Internet :: WWW/HTTP",
-        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
-        ],
+          "Programming Language :: Python",
+          "Framework :: Pyramid",
+          "Topic :: Internet :: WWW/HTTP",
+          "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+      ],
       author='',
       author_email='',
       url='',
@@ -42,4 +43,4 @@ setup(name='JKH',
       [paste.app_factory]
       main = jkh:main
       """,
-      )
+)

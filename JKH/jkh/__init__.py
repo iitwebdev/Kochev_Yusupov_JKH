@@ -1,8 +1,9 @@
 from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.config import Configurator
+from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
-from pyramid.httpexceptions import HTTPNotFound
 from sqlalchemy.pool import NullPool
+
 from .models import (
     DBSession,
     Base,
@@ -12,13 +13,15 @@ from .models import (
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    #engine = engine_from_config(settings, 'sqlalchemy.', poolclass=NullPool)
+    engine = engine_from_config(settings, 'sqlalchemy.', poolclass=NullPool)
     engine = engine_from_config(settings, 'sqlalchemy.', poolclass=NullPool)
     DBSession.configure(bind=engine)
-    Base.metadata.bind = engine
-    Base.metadata.create_all(engine)
+    my_session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
+    # Base.metadata.bind = engine
+    # Base.metadata.create_all(engine)
     config = Configurator(
         settings=settings,
+        session_factory=my_session_factory,
         authentication_policy=SessionAuthenticationPolicy())
     config.include('pyramid_chameleon')
     config.include('pyramid_jinja2')
