@@ -210,7 +210,9 @@ header #nav > ul > li > a:hover {
 #intro h1 {
     color: #ffffff;
 }
-
+#intro h2 {
+    color: #ffffff;
+}
 #intro .inner {
     padding: 60px 0;
 }
@@ -231,6 +233,7 @@ header #nav > ul > li > a:hover {
     /*text-shadow: 1px 1px 1px #fff;*/
 }
 
+h2 {color:  #000000}
 .cols {
     margin-bottom: 30px;
 }
