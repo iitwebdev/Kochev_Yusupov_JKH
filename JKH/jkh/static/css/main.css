@@ -227,7 +227,7 @@ header #nav > ul > li > a:hover {
 *  CONTENT
 *******************************************************************************************************************/
 #content {
-    height: 400px;
+    height: 100%;
     padding: 40px 0 50px;
     background: #ffffff;
     /*text-shadow: 1px 1px 1px #fff;*/

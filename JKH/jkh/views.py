@@ -27,20 +27,22 @@ def auth_required(func):
         if owner is None:
             raise HTTPForbidden()
         return func(request)
-
     return wrapper
 
 
 def get_current_user(request):
-    id_ = authenticated_userid(request)
-    # import pdb; pdb.set_trace()
-    session = DBSession()
-    return session.query(User).get(id_)
+    try:
+        id_ = authenticated_userid(request)
+        # import pdb; pdb.set_trace()
+        session = DBSession()
+        return session.query(User).get(id_)
+    except:
+        return None
 
 
 @view_config(route_name='home', renderer='templates/home.jinja2')
 def my_view(request):
-    if auth_required:
+    if get_current_user(request):
         return {'login': True}
     else:
         return {'login': False}
@@ -51,13 +53,16 @@ def about_view(request):
     return {
         'About': u'Создать удобный для вас удобный и простой сервис.'
                  u'С помощью данного сервиса у вас появиться возможность хранить все данные в одном месте, '
-                 u'а так же очень просто рассчитывать свои расходы. '}
+                 u'а так же очень просто рассчитывать свои расходы. ',
+
+    }
 
 
 @view_config(route_name='user', renderer='templates/user.jinja2')
 @auth_required
 def user_view(request):
-    return {'project': 'JKH'}
+    return {'project': 'JKH',
+            'login': True}
 
 
 @view_config(route_name='news', renderer='templates/news.jinja2')
@@ -158,7 +163,7 @@ def settings_view(request):
         else:
             did_fail = True
     return {
-        'login': "",
+        'login': True,
         'failed_attempt': did_fail,
     }
 
