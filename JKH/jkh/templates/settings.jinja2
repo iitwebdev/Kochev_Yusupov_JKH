@@ -2,13 +2,14 @@
 {% block content %}
     <center>
         <form method="post">
-            <h2>Сменить пароль</h2>
+            <h1>Смена пароля</h1>
 
-            <p><b>Введите новый пароль:</b><br>
-                <input type="password" size="40" name="password">
-                <br><input type="submit" class="button" value="Сменить пароль">
-                <br>
+            <p><b class="text">Введите новый пароль:</b><br>
 
+            <p><input type="password" class="input" size="40" name="password">
+            <br><input type="submit" class="button" value="Сменить пароль">
+            <br>
+            </p>
             <h3>{{ Messege }}</h3>
         </form>
         {% if failed_attempt %}
