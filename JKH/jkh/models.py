@@ -1,8 +1,13 @@
 #coding: utf-8
-from sqlalchemy import ForeignKey
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+import md5
+import random
+import string  # pylint: disable=W0402
+
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Integer, PickleType
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.orm import (
@@ -11,10 +16,7 @@ from sqlalchemy.orm import (
 )
 from pyramid.threadlocal import get_current_request
 from pyramid.events import subscriber, NewRequest
-import md5
-import random
-import string  # pylint: disable=W0402
-import socket
+
 
 # pylint: disable=C0103
 Base = declarative_base()
@@ -152,3 +154,45 @@ def del_all():
     for user in session.query(User):
         session.delete(user)
     session.commit()
+
+
+def send_email(email, password, theme):
+    """
+    :param email: ПЯ на который будем отправлять письмо
+    :param password: пароль пользователя
+    :param theme: переменная, по которой понимаем для чего письмо(либо письмо при регистрации или письмо с новым паролем)
+    """
+    me = 'jkhsup@mail.ru'
+    server = 'smtp.mail.ru'
+    port = 25
+    user_name = 'jkhsup@mail.ru'
+    user_password = '123456789w'  #пароль отправителя
+    msg = MIMEMultipart()
+    msg['From'] = me
+    msg['To'] = email
+    if theme == 1:
+        msg['Subject'] = 'Регистрация на ЖКХ'
+        msg_text = MIMEText(
+            u'Спасибо за регистрацию на сайте !\n\nВаш логин: '
+            + email + u'\n\nВаш пароль: ' + password,
+            "plain",
+            "utf-8")
+        msg.attach(msg_text)
+    if theme == 2:
+        msg['Subject'] = 'Восстановление пароля на ЖКХ'
+        msg_text = MIMEText(u'\nВаш новый пароль: ' + password, "plain", "utf-8")
+        msg.attach(msg_text)
+    if theme == 3:
+        msg['Subject'] = 'Смена пароля на ЖКХ'
+        msg_text = MIMEText(u'\nВаш новый пароль: ' + password, "plain", "utf-8")
+        msg.attach(msg_text)
+    # Подключение
+    s = smtplib.SMTP(server, port)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    # Авторизация
+    s.login(user_name, user_password)
+    # Отправка пиьма
+    s.sendmail(user_name, email, msg.as_string())
+    s.quit()

@@ -12,13 +12,14 @@
                     для
                     Вас
                     полезной!</h2>
-                <a href="/registration" class="button">Регистрация</a>
-                <a href="/login" class="button">Авторизация</a>
+                {% if login %}
+                    <a href="/registration" class="button">Регистрация</a>
+                    <a href="/login" class="button">Авторизация</a>
+                {% endif %}
 
             </div>
         </div>
     </div>
-    <!-- / #intro -->
     <hr>
 {% endblock %}
 

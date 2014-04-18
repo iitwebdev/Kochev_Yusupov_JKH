@@ -33,5 +33,8 @@ def main(global_config, **settings):
     config.add_route('about', '/about')
     config.add_route('registration', '/registration')
     config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
+    config.add_route('passremind', '/passremind')
+    config.add_route('settings', '/settings')
     config.scan()
     return config.make_wsgi_app()
