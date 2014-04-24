@@ -6,6 +6,7 @@ import md5
 import random
 import string  # pylint: disable=W0402
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -38,6 +39,38 @@ def rndstr(length=32):
     chars = string.ascii_letters + string.digits
     return ''.join(
         random.choice(chars) for x in range(length))
+
+
+class Country(Base):
+    __tablename__ = "country"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255))
+
+
+class Region(Base):
+    __tablename__ = "region"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255))
+
+
+class Service(Base):
+    __tablename__ = "service"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255))
+
+
+class Tarif(Base):
+    __tablename__ = "tarif"
+
+    id = Column(Integer, primary_key=True)
+
+    country_id = Column(Integer, ForeignKey("country.id"), nullable=False)
+    region_id = Column(Integer, ForeignKey("region.id"), nullable=False)
+    service_id = Column(Integer, ForeignKey("service.id"), nullable=False)
+    price = Column()
 
 
 class User(Base):
@@ -135,6 +168,7 @@ def login(email, password):
     query = session.query(User).filter(User.email == email)
     try:
         user = query.one()
+        print(user)
         if User.get_hashed_password(user, password) == user.hpass:
             return user
         else:
