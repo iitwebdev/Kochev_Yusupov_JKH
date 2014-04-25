@@ -19,6 +19,7 @@ from pyramid.threadlocal import get_current_request
 from pyramid.events import subscriber, NewRequest
 
 
+
 # pylint: disable=C0103
 Base = declarative_base()
 DBSession = scoped_session(sessionmaker(), scopefunc=get_current_request)

@@ -1,4 +1,13 @@
 {% extends 'my_template.jinja2' %}
 {% block content %}
-    <h1>Test</h1>
+
+
+    <form method="post">
+        <h1>Холодное водоснабжение</h1>
+
+        <p><b class="text">Введите начальные показания:</b><br>
+
+        <p><input type="text" class="input" size="40" name="startValue"></p>
+        <input type="submit" class="button" value="Посчитать">
+    </form>
 {% endblock %}
