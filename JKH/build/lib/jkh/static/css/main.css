@@ -16,6 +16,7 @@ Choose the colour you wish to use => colour-azure.css is default
 *******************************************************************************************************************/
 html {
     height: 100%;
+
     background: #f2f2f2;
 }
 
@@ -107,7 +108,7 @@ header a#logo {
     display: block;
     position: absolute;
     top: 0;
-    left: -80px;
+    left: -150px;
     color: #fff;
     text-transform: uppercase;
     text-decoration: none;
@@ -121,7 +122,7 @@ header a#logo:hover {
 header #nav {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 0px;
 }
 
 header #nav > strong {
@@ -210,7 +211,9 @@ header #nav > ul > li > a:hover {
 #intro h1 {
     color: #ffffff;
 }
-
+#intro h2 {
+    color: #ffffff;
+}
 #intro .inner {
     padding: 60px 0;
 }
@@ -225,12 +228,14 @@ header #nav > ul > li > a:hover {
 *  CONTENT
 *******************************************************************************************************************/
 #content {
-    height: 400px;
+    height: 100%;
     padding: 40px 0 50px;
-    background: #ffffff;
+    background: #f2f2f2;
+    /*background: #ffffff;*/
     /*text-shadow: 1px 1px 1px #fff;*/
 }
 
+h2 {color:  #000000}
 .cols {
     margin-bottom: 30px;
 }
@@ -280,10 +285,10 @@ form .text:hover {
 *  FOOTER
 *******************************************************************************************************************/
 footer {
-    margin: -100px auto 0;
-    position: relative;
-    height: 100px;
-    padding: 30px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 10px 0;
     background: #1a1a1a;
     font-size: 0.85em;
     color: #ffffff;

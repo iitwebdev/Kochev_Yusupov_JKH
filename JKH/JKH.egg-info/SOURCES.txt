@@ -13,6 +13,7 @@ JKH.egg-info/not-zip-safe
 JKH.egg-info/requires.txt
 JKH.egg-info/top_level.txt
 jkh/__init__.py
+jkh/models.py
 jkh/tests.py
 jkh/views.py
 jkh/static/pyramid-16x16.png

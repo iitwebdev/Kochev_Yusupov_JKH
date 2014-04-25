@@ -17,6 +17,7 @@ requires = [
     'jinja2',
     'SQLAlchemy',
     'zope.sqlalchemy',
+
 ]
 
 setup(name='JKH',

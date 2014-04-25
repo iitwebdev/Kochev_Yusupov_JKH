@@ -67,8 +67,6 @@ class Tarif(Base):
     __tablename__ = "tarif"
 
     id = Column(Integer, primary_key=True)
-
-    country_id = Column(Integer, ForeignKey("country.id"), nullable=False)
     region_id = Column(Integer, ForeignKey("region.id"), nullable=False)
     service_id = Column(Integer, ForeignKey("service.id"), nullable=False)
     price = Column()
