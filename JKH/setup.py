@@ -17,6 +17,8 @@ requires = [
     'jinja2',
     'SQLAlchemy',
     'zope.sqlalchemy',
+    # 'sacrud',
+    # 'sacrud.pyramid_ext'
 
 ]
 
@@ -43,5 +45,7 @@ setup(name='JKH',
       entry_points="""\
       [paste.app_factory]
       main = jkh:main
+      [console_scripts]
+      initialize_example_db = jkh.scripts.initializedb:main
       """,
 )

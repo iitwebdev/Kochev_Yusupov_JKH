@@ -1,5 +1,6 @@
 from pyramid.authentication import SessionAuthenticationPolicy
 from pyramid.config import Configurator
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy.pool import NullPool
@@ -8,6 +9,9 @@ from .models import (
     DBSession,
     Base,
     User, Country, Region, Service, Tarif)
+
+def not_found(request):
+    return HTTPNotFound('Not found, bro.')
 
 
 def main(global_config, **settings):
@@ -36,6 +40,7 @@ def main(global_config, **settings):
     config.add_route('logout', '/logout')
     config.add_route('passremind', '/passremind')
     config.add_route('settings', '/settings')
+    config.add_notfound_view(not_found, append_slash=True)
 
     config.include('sacrud.pyramid_ext', route_prefix='/admin')
     settings = config.registry.settings

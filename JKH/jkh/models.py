@@ -6,9 +6,8 @@ import md5
 import random
 import string  # pylint: disable=W0402
 
-from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.orm import (
@@ -17,7 +16,6 @@ from sqlalchemy.orm import (
 )
 from pyramid.threadlocal import get_current_request
 from pyramid.events import subscriber, NewRequest
-
 
 
 # pylint: disable=C0103
@@ -40,8 +38,6 @@ def rndstr(length=32):
     chars = string.ascii_letters + string.digits
     return ''.join(
         random.choice(chars) for x in range(length))
-
-
 class Country(Base):
     __tablename__ = "country"
 
@@ -167,7 +163,6 @@ def login(email, password):
     query = session.query(User).filter(User.email == email)
     try:
         user = query.one()
-        print(user)
         if User.get_hashed_password(user, password) == user.hpass:
             return user
         else:
@@ -207,8 +202,7 @@ def send_email(email, password, theme):
         msg['Subject'] = 'Регистрация на ЖКХ'
         msg_text = MIMEText(
             u'Спасибо за регистрацию на сайте !\n\nВаш логин: '
-            + email + u'\n\nВаш пароль: ' + password,
-            "plain",
+            + email + u'\n\nВаш пароль: '
             "utf-8")
         msg.attach(msg_text)
     if theme == 2:
@@ -229,3 +223,5 @@ def send_email(email, password, theme):
     # Отправка пиьма
     s.sendmail(user_name, email, msg.as_string())
     s.quit()
+
+    # метод для вытягивания последнего значения для услуги.

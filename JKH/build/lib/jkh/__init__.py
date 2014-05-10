@@ -7,7 +7,7 @@ from sqlalchemy.pool import NullPool
 from .models import (
     DBSession,
     Base,
-)
+    User, Country, Region, Service, Tarif)
 
 
 def main(global_config, **settings):
@@ -36,5 +36,10 @@ def main(global_config, **settings):
     config.add_route('logout', '/logout')
     config.add_route('passremind', '/passremind')
     config.add_route('settings', '/settings')
+
+    config.include('sacrud.pyramid_ext', route_prefix='/admin')
+    settings = config.registry.settings
+    settings['sacrud.models'] = {"": [User, Country, Tarif, Service, Region]}
+
     config.scan()
     return config.make_wsgi_app()
