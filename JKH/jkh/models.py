@@ -7,15 +7,19 @@ import random
 import string  # pylint: disable=W0402
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, Numeric
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
-)
+    relationship)
 from pyramid.threadlocal import get_current_request
 from pyramid.events import subscriber, NewRequest
+
+
+
+
 
 
 # pylint: disable=C0103
@@ -38,18 +42,27 @@ def rndstr(length=32):
     chars = string.ascii_letters + string.digits
     return ''.join(
         random.choice(chars) for x in range(length))
+
+
 class Country(Base):
     __tablename__ = "country"
 
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
 
+    def __repr__(self):
+        return self.name
+
 
 class Region(Base):
     __tablename__ = "region"
-
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
+    country_id = Column(Integer, ForeignKey("country.id"), nullable=False)
+    country = relationship("Country")
+
+    def __repr__(self):
+        return self.name
 
 
 class Service(Base):
@@ -58,14 +71,28 @@ class Service(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
 
+    def __repr__(self):
+        return self.name
+
+
+# class Car(Base):
+#     __tablename__ = "car"
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String(255))
+
 
 class Tarif(Base):
     __tablename__ = "tarif"
 
     id = Column(Integer, primary_key=True)
     region_id = Column(Integer, ForeignKey("region.id"), nullable=False)
+    region = relationship("Region")
     service_id = Column(Integer, ForeignKey("service.id"), nullable=False)
-    price = Column()
+    service = relationship("Service")
+    price = Column(Integer)
+
+    def __repr__(self):
+        return self.name
 
 
 class User(Base):
@@ -141,6 +168,7 @@ def register(name, email, password):
             return False
         except NoResultFound or MultipleResultsFound:
             # Создаем нового пользователя
+            Base.metadata.create_all()
             user = User(name=name, email=email)
             ##TODO SMTP mail
             user.password = password
@@ -203,7 +231,7 @@ def send_email(email, password, theme):
         msg_text = MIMEText(
             u'Спасибо за регистрацию на сайте !\n\nВаш логин: '
             + email + u'\n\nВаш пароль: '
-            "utf-8")
+                      "utf-8")
         msg.attach(msg_text)
     if theme == 2:
         msg['Subject'] = 'Восстановление пароля на ЖКХ'

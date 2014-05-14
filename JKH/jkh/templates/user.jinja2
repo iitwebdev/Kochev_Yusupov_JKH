@@ -7,6 +7,31 @@
 
         <p><b class="text">Введите начальные показания:</b><br>
 
+            <select size="1" name="CountrySelect" onchange="selectChanged()" id="CountryID" >
+                <option selected="selectedCountry">Выберите Cтрану</option>
+                {% for country in countries %}
+                    <option value={{ country.id }}>{{ country.name }}</option>
+                {% endfor %}
+            </select>
+
+            <script type="application/javascript">
+                function selectChanged()
+                {
+                    var objSel = document.getElementById("CountryID")
+                    var val = objSel.options[objSel.selectedIndex].value
+
+                }
+            </script>
+            <select size="1">
+                <option selected="selectedReg">Выберите Область</option>
+                {% for region in regions %}
+                    {% if region.country_id == CountrySelect %}
+                        <option>{{ region.name }}</option>}
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+
         <p><input type="text" class="input" size="40" name="startValue"></p>
         <input type="submit" class="button" value="Посчитать">
     </form>

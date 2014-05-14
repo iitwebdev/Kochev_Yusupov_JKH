@@ -56,4 +56,3 @@ jkh/static/js/css3-mediaqueries.min.js
 jkh/static/js/custom.js
 jkh/static/js/html5.js
 jkh/static/js/jquery-1.6.4.min.js
-jkh/templates/mytemplate.pt
