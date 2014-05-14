@@ -7,29 +7,73 @@
 
         <p><b class="text">Введите начальные показания:</b><br>
 
-            <select size="1" name="CountrySelect" onchange="selectChanged()" id="CountryID" >
-                <option selected="selectedCountry">Выберите Cтрану</option>
-                {% for country in countries %}
-                    <option value={{ country.id }}>{{ country.name }}</option>
-                {% endfor %}
+            {#            <select size="1" name="CountrySelect" onchange="selectChanged()" id="Countries">#}
+            {#                <option selected="selectedCountry">Выберите Cтрану</option>#}
+            {#                {% for country in countries %}#}
+            {#                    <option value={{ country.name }}>{{ country.name }}</option>#}
+            {#                {% endfor %}#}
+            {#            </select>#}
+
+            <select id="categories">
+                <option value="">Какие статьи мы можем Вам предложить?</option>
+                <option value="php-snippets" class="programming">PHP snippets</option>
+                <option value="php-oop" class="programming">PHP ООП</option>
             </select>
 
-            <script type="application/javascript">
-                function selectChanged()
-                {
-                    var objSel = document.getElementById("CountryID")
-                    var val = objSel.options[objSel.selectedIndex].value
+            <select id="programming">
+                <option value="">О чем почитать статью?</option>
+                <option value="programming">О программировании</option>
+                <option value="markup">О верстке</option>
+                <option value="seo">О сео</option>
+                <option value="another-projects">О создании сайтов</option>
+            </select>
 
-                }
+            <select id="categories">
+                <option value="">Какие статьи мы можем Вам предложить?</option>
+                <option value="php-snippets" class="programming">PHP snippets</option>
+                <option value="php-oop" class="programming">PHP ООП</option>
+            </select>
+
+            <select id="articles">
+                <option value="">Статьи</option>
+                <option value="what-is-snippets" class="php-snippets">PHP - что такое snippets?</option>
+                <option value="snippets-web-sites" class="php-snippets">PHP snippets - ресурсы?</option>
+                <option value="php5-whats-new" class="php-oop">PHP 5 - что нового?</option>
+                <option value="php-code-templates" class="php-oop">PHP - шаблоны проектрирования</option>
+                <option value="php-uploading-images" class="php-work-with-images">PHP - загружаем изображения</option>
+                <option value="php-images-and-watermarks" class="php-work-with-images">PHP - размещаем watermark
+                </option>
+                <option value="php-images-and-watermarks" class="php-work-with-images php-oop ">Примеры скриптов
+                </option>
+            </select>
+
+
+            {#            <script type="application/javascript">#}
+            {#                function selectChanged()#}
+            {#                {#}
+            {#                    var objSel = document.getElementById("CountryID")#}
+            {#                    var val = objSel.options[objSel.selectedIndex].value#}
+            {##}
+            {#                }#}
+            {#            </script>#}
+
+            {#            <select size="1" id="Regions">#}
+            {#                <option selected="selectedReg">Выберите Область</option>#}
+            {#                {% for region in regions %}#}
+            {#                    <option class="{{ countries[region.country_id] }}">{{ region.name }}</option>}#}
+            {#                {% endfor %}#}
+            {#            </select>#}
+{#http://awesome-design.com/stati/javascript/svyazannye-spiski-select-jquery-chained-selectes-chast-vtoraya.html#}
+            <script type="application/javascript" src="/jquery.chained.min.js">
+                {#                jQuery(document).ready(#}
+                {#                        function () {#}
+                {#                            jQuery("#Countries").chained("#Regions");#}
+                {#                        });#}
+                jQuery(document).ready(function () {
+                    jQuery("#categories").chained("#programming");
+                    jQuery("#articles").chained("#categories");
+                });
             </script>
-            <select size="1">
-                <option selected="selectedReg">Выберите Область</option>
-                {% for region in regions %}
-                    {% if region.country_id == CountrySelect %}
-                        <option>{{ region.name }}</option>}
-                    {% endif %}
-                {% endfor %}
-            </select>
 
 
         <p><input type="text" class="input" size="40" name="startValue"></p>
