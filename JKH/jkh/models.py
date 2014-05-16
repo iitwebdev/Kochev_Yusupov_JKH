@@ -7,7 +7,7 @@ import random
 import string  # pylint: disable=W0402
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer, ForeignKey, Numeric
+from sqlalchemy import Column, String, Integer, ForeignKey, Date, Numeric
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.orm import (
@@ -89,7 +89,7 @@ class Tarif(Base):
     region = relationship("Region")
     service_id = Column(Integer, ForeignKey("service.id"), nullable=False)
     service = relationship("Service")
-    price = Column(Integer)
+    price = Column(Numeric(4, 2))
 
     def __repr__(self):
         return self.name
@@ -106,8 +106,14 @@ class User(Base):
     name = Column(String(255))
     email = Column(String(50))
     type = Column(Integer)
+    region_id = Column(Integer, ForeignKey("region.id"), nullable=True)
+    region = relationship("Region")
+
     _salt = Column("salt", String(32))
     hpass = Column(String(32))
+
+    def __repr__(self):
+        return self.name
 
     @hybrid_property
     def salt(self):
@@ -151,6 +157,19 @@ class User(Base):
         mhash.update(pwd)
         mhash.update(user.salt)
         return mhash.hexdigest()
+
+
+class History(Base):
+    __tablename__ = "history"
+
+    id = Column(Integer, primary_key=True)
+
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    user = relationship("User")
+    service_id = Column(Integer, ForeignKey("service.id"), nullable=False)
+    startDate = Column(Date)
+    endDate = Column(Date)
+    cost = Column(Numeric(10, 2))
 
 
 def pas_gen():
