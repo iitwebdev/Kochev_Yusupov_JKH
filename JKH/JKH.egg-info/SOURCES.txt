@@ -16,6 +16,8 @@ jkh/__init__.py
 jkh/models.py
 jkh/tests.py
 jkh/views.py
+jkh/Scripts/__init__.py
+jkh/Scripts/initializedb.py
 jkh/static/pyramid-16x16.png
 jkh/static/pyramid.png
 jkh/static/theme.css
@@ -56,3 +58,4 @@ jkh/static/js/css3-mediaqueries.min.js
 jkh/static/js/custom.js
 jkh/static/js/html5.js
 jkh/static/js/jquery-1.6.4.min.js
+jkh/templates/jquery.chained.min.js

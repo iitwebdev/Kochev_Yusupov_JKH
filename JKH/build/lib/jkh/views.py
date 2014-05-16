@@ -9,7 +9,9 @@ from .models import (
     User,
     login,
     register,
-    pas_gen, send_email)
+    pas_gen, send_email,
+    Country, Region, Tarif,
+    Service)
 
 
 @forbidden_view_config()
@@ -27,6 +29,7 @@ def auth_required(func):
         if owner is None:
             raise HTTPForbidden()
         return func(request)
+
     return wrapper
 
 
@@ -61,7 +64,16 @@ def about_view(request):
 @view_config(route_name='user', renderer='templates/user.jinja2')
 @auth_required
 def user_view(request):
+    session = DBSession()
+    countries = session.query(Country).all()
+    regions = session.query(Region).all()
+    tarifs = session.query(Tarif).all()
+    services = session.query(Service).all()
     return {'project': 'JKH',
+            'countries': countries,
+            'regions': regions,
+            'tarifs': tarifs,
+            'services': services,
             'login': True}
 
 

@@ -105,6 +105,7 @@ class User(Base):
 
     name = Column(String(255))
     email = Column(String(50))
+    type = Column(Integer)
     _salt = Column("salt", String(32))
     hpass = Column(String(32))
 
