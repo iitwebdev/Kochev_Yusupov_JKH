@@ -21,7 +21,7 @@
             <select id="regions" class="select" name="regions">
                 <option>Выберите Регион</option>
                 {% for region in regions %}
-                    <option class={{ region.country_id }}>{{ region.name }}</option>
+                    <option value={{ region.id }} class={{ region.country_id }}>{{ region.name }}</option>
                 {% endfor %}
             </select>
         </p>
@@ -30,8 +30,9 @@
         <p>
             <select id="tarifs" class="select" name="tarifs">
                 <option>Выберите Тариф</option>
-                {% for service in services %}
-                    <option  value={{ service.id }}>{{ service.name}}</option>
+                {% for tarif in tarifs %}
+
+                    <option value={{ tarif.id }} class={{ tarif.region_id }}>{{ services[tarif.service_id-1] }}</option>
                 {% endfor %}
             </select>
         </p>
@@ -58,6 +59,7 @@
 
         <script>
             $("#regions").chained("#countries");
+            $("#tarifs").chained("#regions");
             {#            $("#countries").chained("#regions");#}
             {#                $("#series").chained("#mark");#}
         </script>
