@@ -5,11 +5,11 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy.pool import NullPool
 
-from jkh.Scripts import initializedb
+
 from .models import (
     DBSession,
     Base,
-    User, Country, Region, Service, Tarif)  #Tariff, Ololo)
+    User, Country, Region, Service, Tarif)
 
 
 def not_found(request):
@@ -43,7 +43,6 @@ def main(global_config, **settings):
     config.add_route('settings', '/settings')
     config.add_notfound_view(not_found, append_slash=True)
 
-    # initializedb.main()
     config.include('sacrud.pyramid_ext', route_prefix='/admin')
     settings = config.registry.settings
     settings['sacrud.models'] = {"": [User, Country, Tarif, Service, Region]}

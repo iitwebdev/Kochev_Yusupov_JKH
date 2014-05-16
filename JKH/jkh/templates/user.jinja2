@@ -3,9 +3,9 @@
 
 
     <form method="post">
-{#        <h1>Холодное водоснабжение</h1>#}
-{##}
-{#        <p><b class="text">Введите начальные показания:</b><br>#}
+        {#        <h1>Холодное водоснабжение</h1>#}
+        {##}
+        {#        <p><b class="text">Введите начальные показания:</b><br>#}
 
         <p>
             <select id="countries" class="select" name="countries">
@@ -21,19 +21,17 @@
             <select id="regions" class="select" name="regions">
                 <option>Выберите Регион</option>
                 {% for region in regions %}
-                    <option class={{ region.country_id }}>{{ region.name}}</option>
+                    <option class={{ region.country_id }}>{{ region.name }}</option>
                 {% endfor %}
             </select>
         </p>
 
 
-
-           <p>
+        <p>
             <select id="tarifs" class="select" name="tarifs">
                 <option>Выберите Тариф</option>
-                {% for tarif in tarifs %}
-                    
-                    <option class={{ tarif.region_id }}>{{ .name}}</option>
+                {% for service in services %}
+                    <option  value={{ service.id }}>{{ service.name}}</option>
                 {% endfor %}
             </select>
         </p>
