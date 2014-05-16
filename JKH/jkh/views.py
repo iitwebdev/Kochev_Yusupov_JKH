@@ -10,8 +10,7 @@ from .models import (
     login,
     register,
     pas_gen, send_email,
-    Country, Region, Tarif,
-    Service)
+    History)
 
 
 @forbidden_view_config()
@@ -65,16 +64,20 @@ def about_view(request):
 @auth_required
 def user_view(request):
     session = DBSession()
-    countries = session.query(Country).all()
-    regions = session.query(Region).all()
-    tarifs = session.query(Tarif).all()
-    services = session.query(Service).all()
-    return {'project': 'JKH',
-            'countries': countries,
-            'regions': regions,
-            'tarifs': tarifs,
-            'services': services,
-            'login': True}
+    history = session.query(History).filter(History.user_id == get_current_user(request).id)
+    return {
+        'history': history
+    }
+    # countries = session.query(Country).all()
+    # regions = session.query(Region).all()
+    # tarifs = session.query(Tarif).all()
+    # services = session.query(Service).all()
+    # # return {'project': 'JKH',
+    # #         'countries': countries,
+    # #         'regions': regions,
+    # #         'tarifs': tarifs,
+    # #         'services': services,
+    # #         'login': True}
 
 
 @view_config(route_name='news', renderer='templates/news.jinja2')
@@ -91,7 +94,7 @@ def registration_view(request):
             request.POST["name"], request.POST["email"],
             request.POST["password"]
         )
-        print(user)
+        # print(user)
         if user:
             headers = remember(request, user.id)
             return HTTPFound(location=nxt, headers=headers)

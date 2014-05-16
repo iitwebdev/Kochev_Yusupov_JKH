@@ -1,71 +1,61 @@
 {% extends 'my_template.jinja2' %}
-{% block content %}
+{% block content%}
 
-
-    <form method="post">
-        {#        <h1>Холодное водоснабжение</h1>#}
-        {##}
-        {#        <p><b class="text">Введите начальные показания:</b><br>#}
-
-        <p>
-            <select id="countries" class="select" name="countries">
-                <option>Выберите Cтрану</option>
-                {% for country in countries %}
-                    <option value={{ country.id }} class={{ country.id }}>{{ country.name }}</option>
-                {% endfor %}
-            </select>
-        </p>
-
-
-        <p>
-            <select id="regions" class="select" name="regions">
-                <option>Выберите Регион</option>
-                {% for region in regions %}
-                    <option value={{ region.id }} class={{ region.country_id }}>{{ region.name }}</option>
-                {% endfor %}
-            </select>
-        </p>
-
-
-        <p>
-            <select id="tarifs" class="select" name="tarifs">
-                <option>Выберите Тариф</option>
-                {% for tarif in tarifs %}
-
-                    <option value={{ tarif.id }} class={{ tarif.region_id }}>{{ services[tarif.service_id-1] }}</option>
-                {% endfor %}
-            </select>
-        </p>
-
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script src="jquery.chained.js"></script>
-        <script type="text/javascript"
-                src="http://awesome-design.com/templates/awesome-design/js/jquery.chained.js"></script>
-
-        {#            <select id="mark" name="mark1">#}
-        {#                <option value="">--</option>#}
-        {#                <option value="bmw">BMW</option>#}
-        {#                <option value="audi">Audi</option>#}
-        {#            </select>#}
-        {#            <select id="series" name="series1">#}
-        {#                <option value="">--</option>#}
-        {#                <option value="series-3" class="bmw">3 series</option>#}
-        {#                <option value="series-5" class="bmw">5 series</option>#}
-        {#                <option value="series-6" class="bmw">6 series</option>#}
-        {#                <option value="a3" class="audi">A3</option>#}
-        {#                <option value="a4" class="audi">A4</option>#}
-        {#                <option value="a5" class="audi">A5</option>#}
-        {#            </select>#}
-
-        <script>
-            $("#regions").chained("#countries");
-            $("#tarifs").chained("#regions");
-            {#            $("#countries").chained("#regions");#}
-            {#                $("#series").chained("#mark");#}
-        </script>
-
-
-        <p><input type="text" class="input" size="40" name="startValue"></p>
-        <input type="submit" class="button" value="Посчитать">
-    </form>
+    <input type="submit" class="button" value="Добавить услугу">
+    <input type="submit" class="button" value="Расчитать затраты">
+    {% for i in history %}
+        <h2>{{ i.cost }}</h2>
+    {% endfor %}
 {% endblock %}
+
+
+
+
+
+
+{#    <form method="post">#}
+{#        <p>#}
+{#            <select id="countries" class="select" name="countries">#}
+{#                <option>Выберите Cтрану</option>#}
+{#                {% for country in countries %}#}
+{#                    <option value={{ country.id }} class={{ country.id }}>{{ country.name }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </p>#}
+{##}
+{##}
+{#        <p>#}
+{#            <select id="regions" class="select" name="regions">#}
+{#                <option>Выберите Регион</option>#}
+{#                {% for region in regions %}#}
+{#                    <option value={{ region.id }} class={{ region.country_id }}>{{ region.name }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </p>#}
+{##}
+{##}
+{#        <p>#}
+{#            <select id="tarifs" class="select" name="tarifs">#}
+{#                <option>Выберите Тариф</option>#}
+{#                {% for tarif in tarifs %}#}
+{#                    <option value={{ tarif.id }} class={{ tarif.region_id }}>{{ services[tarif.service_id-1] }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </p>#}
+{##}
+{#        <script src="http://code.jquery.com/jquery-latest.min.js"></script>#}
+{#        <script src="jquery.chained.js"></script>#}
+{#        <script type="text/javascript"#}
+{#                src="http://awesome-design.com/templates/awesome-design/js/jquery.chained.js"></script>#}
+{##}
+{#        <script>#}
+{#            $("#regions").chained("#countries");#}
+{#            $("#tarifs").chained("#regions");#}
+{#            $("#countries").chained("#regions");#}
+{#                $("#series").chained("#mark");#}
+{#        </script>#}
+{##}
+{##}
+{#        <p><input type="text" class="input" size="40" name="startValue"></p>#}
+{#        <input type="submit" class="button" value="Посчитать">#}
+{#    </form>#}

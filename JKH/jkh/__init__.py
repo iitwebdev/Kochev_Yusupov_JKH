@@ -5,11 +5,10 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy.pool import NullPool
 
-
 from .models import (
     DBSession,
     Base,
-    User, Country, Region, Service, Tarif)
+    User, Country, Region, Service, Tarif, History)
 
 
 def not_found(request):
@@ -45,7 +44,7 @@ def main(global_config, **settings):
 
     config.include('sacrud.pyramid_ext', route_prefix='/admin')
     settings = config.registry.settings
-    settings['sacrud.models'] = {"": [User, Country, Tarif, Service, Region]}
+    settings['sacrud.models'] = {"": [User, Country, Tarif, Service, Region, History]}
 
     config.scan()
     return config.make_wsgi_app()
