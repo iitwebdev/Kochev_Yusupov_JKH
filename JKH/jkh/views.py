@@ -10,8 +10,8 @@ from .models import (
     login,
     register,
     pas_gen, send_email,
-    Country, Region
-)
+    Country, Region, Tarif,
+    Service)
 
 
 @forbidden_view_config()
@@ -67,9 +67,13 @@ def user_view(request):
     session = DBSession()
     countries = session.query(Country).all()
     regions = session.query(Region).all()
+    tarifs = session.query(Tarif).all()
+    services = session.query(Service).all()
     return {'project': 'JKH',
             'countries': countries,
             'regions': regions,
+            'tarifs': tarifs,
+            'services': services,
             'login': True}
 
 
