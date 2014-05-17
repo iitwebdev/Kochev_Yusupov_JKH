@@ -1,0 +1,52 @@
+{% extends 'my_template.jinja2' %}
+{% block content %}
+
+    <form method="post">
+        <p>
+            <select id="countries" class="select" name="country">
+                <option>Выберите Cтрану</option>
+                {% for country in countries %}
+                    <option value={{ country.id }} class={{ country.id }}>{{ country.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+
+        <p>
+            <select id="regions" class="select" name="region">
+                <option>Выберите Регион</option>
+                {% for region in regions %}
+                    <option value={{ region.id }} class={{ region.country_id }}>{{ region.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+
+        <p>
+            <select id="tarifs" class="select" name="tarif">
+                <option>Выберите Услугу</option>
+                {% for tarif in tarifs %}
+                    <option value={{ tarif.id }} class={{ tarif.region_id }}>{{ services[tarif.service_id-1] }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <script src="\static\js\jquery.chained.js"></script>
+
+        <script>
+            $("#regions").chained("#countries");
+            $("#tarifs").chained("#regions");
+        </script>
+
+
+        <p><input type="text" class="input" size="40" name="value"></p>
+        <p><input type="date" class="input" size="40" name="date"></p>
+        <input type="submit" class="button" value="Посчитать">
+    </form>
+{% endblock %}
+
+
+
+
+
+

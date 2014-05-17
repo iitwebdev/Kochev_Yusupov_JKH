@@ -23,6 +23,8 @@ from pyramid.events import subscriber, NewRequest
 
 
 
+
+
 # pylint: disable=C0103
 Base = declarative_base()
 DBSession = scoped_session(sessionmaker(), scopefunc=get_current_request)
@@ -169,9 +171,10 @@ class History(Base):
     user = relationship("User")
     service_id = Column(Integer, ForeignKey("service.id"), nullable=False)
     service = relationship("Service")
-    startDate = Column(Date)
-    endDate = Column(Date)
+    # startDate = Column(Date)
+    date = Column(Date)
     cost = Column(Numeric(10, 2))
+
 
 
 def pas_gen():

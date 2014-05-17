@@ -1,11 +1,30 @@
 {% extends 'my_template.jinja2' %}
-{% block content%}
+{% block content %}
 
-    <input type="submit" class="button" value="Добавить услугу">
-    <input type="submit" class="button" value="Расчитать затраты">
-    {% for i in history %}
-        <h2>{{ i.cost }}</h2>
-    {% endfor %}
+
+    <a href="/calculate" class="button">Добавить показания</a>
+
+    <div style="overflow: auto; height: 500px; max-width: 1000px">
+        <table id="hor-minimalist-a">
+            <thead>
+            <tr>
+                <th scope="col">Дата снятия показания</th>
+                <th scope="col">Услуга</th>
+                <th scope="col">Затраты</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in history %}
+                <tr>
+                    <td>{{ i.date }}</td>
+                    <td>{{ services[i.service_id-1] }}</td>
+                    <td>{{ i.cost }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 {% endblock %}
 
 

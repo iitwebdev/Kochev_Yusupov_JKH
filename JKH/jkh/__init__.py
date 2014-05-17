@@ -40,6 +40,7 @@ def main(global_config, **settings):
     config.add_route('logout', '/logout')
     config.add_route('passremind', '/passremind')
     config.add_route('settings', '/settings')
+    config.add_route('calculate', '/calculate')
     config.add_notfound_view(not_found, append_slash=True)
 
     config.include('sacrud.pyramid_ext', route_prefix='/admin')

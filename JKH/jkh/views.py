@@ -3,6 +3,7 @@ from pyramid.view import view_config, forbidden_view_config
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.security import remember, authenticated_userid, forget
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
+from datetime import datetime
 
 from .models import (
     DBSession,
@@ -10,7 +11,7 @@ from .models import (
     login,
     register,
     pas_gen, send_email,
-    History)
+    History, Service, Country, Region, Tarif)
 
 
 @forbidden_view_config()
@@ -60,13 +61,51 @@ def about_view(request):
     }
 
 
+@view_config(route_name='calculate', renderer='templates/calculate.jinja2')
+@auth_required
+def calculate_view(request):
+    nxt = request.params.get('next') or request.route_url('user')
+    session = DBSession()
+    countries = session.query(Country).all()
+    regions = session.query(Region).all()
+    tarifs = session.query(Tarif)
+    services = session.query(Service).all()
+    if 'contry' and 'region' and 'tarif' and 'value' and 'date' in request.POST:
+        # country = session.query(Country).filter(Country.id == int(request.POST['country'])).one()
+        # region = session.query(Region).filter(Region.id == int(request.POST['region'])).one()
+        tarif = tarifs.filter(Tarif.id == int(request.POST['tarif'])).one()
+        value = int(request.POST['value'])
+        dateISO = (request.POST['date'])
+        date = datetime.strptime(dateISO,"%Y-%m-%d").date()
+        cost = calculate(tarif, value)
+        history = History(user_id=get_current_user(request).id, service_id=tarif.service_id,
+                          date=date, cost=cost)
+        session.add(history)
+        session.commit()
+        return HTTPFound(location=nxt)
+    return {'project': 'JKH',
+            'countries': countries,
+            'regions': regions,
+            'tarifs': tarifs.all(),
+            'services': services,
+            'login': True}
+
+
+def calculate(tarif,value):
+
+    return tarif.price*value
+
+
 @view_config(route_name='user', renderer='templates/user.jinja2')
 @auth_required
 def user_view(request):
     session = DBSession()
     history = session.query(History).filter(History.user_id == get_current_user(request).id)
+    services = session.query(Service).all()
     return {
-        'history': history
+        'history': history,
+        'services': services,
+        'login': True
     }
     # countries = session.query(Country).all()
     # regions = session.query(Region).all()
