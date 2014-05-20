@@ -442,6 +442,7 @@ footer .socialIcons a.twitter {
 	color: #039;
 	padding: 10px 8px;
 	border-bottom: 2px solid #6678b1;
+    cursor: pointer;
 }
 #hor-minimalist-a td
 {

@@ -5,12 +5,12 @@
     <a href="/calculate" class="button">Добавить показания</a>
 
     <div style="overflow: auto; height: 500px; max-width: 1000px">
-        <table id="hor-minimalist-a">
+        <table id="hor-minimalist-a" class="tablesorter" cellspacing="1">
             <thead>
             <tr>
-                <th scope="col">Дата снятия показания</th>
-                <th scope="col">Услуга</th>
-                <th scope="col">Затраты</th>
+                <th title="Кликните для сортировки">Дата снятия показания</th>
+                <th title="Кликните для сортировки">Услуга</th>
+                <th title="Кликните для сортировки">Затраты</th>
             </tr>
             </thead>
             <tbody>
@@ -24,6 +24,17 @@
             </tbody>
         </table>
     </div>
+
+
+    <script type="text/javascript" src="\static\js\jquery-latest.js"></script>
+    <script type="text/javascript" src="\static\js\jquery.tablesorter.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#hor-minimalist-a").tablesorter({debug: true });
+        });
+    </script>
+
+
 
 {% endblock %}
 
