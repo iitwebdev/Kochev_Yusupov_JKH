@@ -1,9 +1,11 @@
 #coding: utf-8
+from datetime import datetime
+
 from pyramid.view import view_config, forbidden_view_config
+
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.security import remember, authenticated_userid, forget
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
-from datetime import datetime
 
 from .models import (
     DBSession,
@@ -76,7 +78,7 @@ def calculate_view(request):
         tarif = tarifs.filter(Tarif.id == int(request.POST['tarif'])).one()
         value = int(request.POST['value'])
         dateISO = (request.POST['date'])
-        date = datetime.strptime(dateISO,"%Y-%m-%d").date()
+        date = datetime.strptime(dateISO, "%Y-%m-%d").date()
         cost = calculate(tarif, value)
         history = History(user_id=get_current_user(request).id, service_id=tarif.service_id,
                           date=date, cost=cost)
@@ -91,9 +93,8 @@ def calculate_view(request):
             'login': True}
 
 
-def calculate(tarif,value):
-
-    return tarif.price*value
+def calculate(tarif, value):
+    return tarif.price * value
 
 
 @view_config(route_name='user', renderer='templates/user.jinja2')
