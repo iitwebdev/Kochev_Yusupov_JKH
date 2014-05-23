@@ -95,7 +95,7 @@ class Tarif(Base):
     price = Column(Numeric(4, 2))
 
     def __repr__(self):
-        return self.name
+        return self.id
 
 
 class User(Base):
@@ -175,6 +175,8 @@ class History(Base):
     date = Column(Date)
     cost = Column(Numeric(10, 2))
 
+    def __repr__(self):
+        return self.id
 
 
 def pas_gen():
