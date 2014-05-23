@@ -1,3 +1,4 @@
+#-*-coding: utf-8-*-#
 def calculate_w_meter(tarif, value):
     """
     Расчет размера оплаты за услугу, для которой есть счетчик

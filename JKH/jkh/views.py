@@ -6,7 +6,7 @@ from pyramid.view import view_config, forbidden_view_config
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.security import remember, authenticated_userid, forget
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
-from JKH.jkh.formulas import calculate_w_meter
+from .formulas import calculate_w_meter
 
 from .models import (
     DBSession,
@@ -16,7 +16,7 @@ from .models import (
     pas_gen, send_email,
     History, Service, Country, Region, Tarif)
 
-from .formulas import calculateWithMeter
+
 
 @forbidden_view_config()
 def forbidden_view(request):

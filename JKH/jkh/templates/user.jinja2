@@ -4,30 +4,35 @@
 
     <a href="/calculate" class="button">Добавить показания</a>
 
-    <div style="overflow: auto; height: 500px; max-width: 1000px">
-        <table id="hor-minimalist-a" class="tablesorter" cellspacing="1">
-            <thead>
-            <tr>
-                <th title="Кликните для сортировки">Дата снятия показания</th>
-                <th title="Кликните для сортировки">Услуга</th>
-                <th title="Кликните для сортировки">Затраты</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for i in history %}
+        <div style="overflow: auto; height: 500px; max-width: 1000px">
+            <table id="hor-minimalist-a" class="tablesorter" cellspacing="1">
+                <thead>
                 <tr>
-                    <td>{{ i.date }}</td>
-                    <td>{{ services[i.service_id-1] }}</td>
-                    <td>{{ i.cost }}</td>
+                    <th title="Кликните для сортировки">Дата снятия показания</th>
+                    <th title="Кликните для сортировки">Услуга</th>
+                    <th title="Кликните для сортировки">Затраты</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for i in history %}
+                    <tr>
+                        <td>{{ i.date }}</td>
+                        <td>{{ services[i.service_id-1] }}</td>
+                        <td>{{ i.cost }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
 
-    <script type="text/javascript" src="\static\js\jquery-latest.js"></script>
+
+
+    <script type="text/javascript" src="\static\js\ddtf.js"></script>
+        <script type="text/javascript" src="\static\js\jquery-latest.js"></script>
     <script type="text/javascript" src="\static\js\jquery.tablesorter.js"></script>
+{#    <script src="https://jqueryjs.googlecode.com/files/jquery-1.2.6.js"></script>#}
+
     <script>
         $(document).ready(function () {
             $("#hor-minimalist-a").tablesorter();
