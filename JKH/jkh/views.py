@@ -110,23 +110,12 @@ def calculate_view(request):
 def user_view(request):
     session = DBSession()
     history = session.query(History).filter(History.user_id == get_current_user(request).id)
-
     services = session.query(Service).all()
     return {
         'history': history,
         'services': services,
         'login': True
     }
-    # countries = session.query(Country).all()
-    # regions = session.query(Region).all()
-    # tarifs = session.query(Tarif).all()
-    # services = session.query(Service).all()
-    # # return {'project': 'JKH',
-    # #         'countries': countries,
-    # #         'regions': regions,
-    # #         'tarifs': tarifs,
-    # #         'services': services,
-    # #         'login': True}
 
 
 @view_config(route_name='news', renderer='templates/news.jinja2')

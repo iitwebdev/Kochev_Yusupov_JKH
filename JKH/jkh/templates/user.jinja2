@@ -28,10 +28,8 @@
         </div>
 
 
-        <script type="text/javascript" src="\static\js\ddtf.js"></script>
         <script type="text/javascript" src="\static\js\jquery-latest.js"></script>
         <script type="text/javascript" src="\static\js\jquery.tablesorter.js"></script>
-        {#    <script src="https://jqueryjs.googlecode.com/files/jquery-1.2.6.js"></script>#}
 
         <script>
             $(document).ready(function () {
@@ -40,23 +38,23 @@
         </script>
 
 
-
         <script type='text/javascript' src='http://www.google.com/jsapi'></script>
         <script type='text/javascript'>
             google.load('visualization', '1', {'packages': ['annotatedtimeline']});
             google.setOnLoadCallback(drawChart);
             function drawChart() {
-                var list = []
-                {#                list[0] = ['Дата', 'Сумма']#}
+                var list = [];
                 var j = 0;
                 {% for i in history %}
-                    console.log({{ i.date.year}})
-                    list[j] = [new Date({{ i.date.year }}, {{ i.date.month }}, {{ i.date.day }}), {{ i.cost }}]
+                    list[j] = [new Date({{ i.date.year }}, {{ i.date.month }}, {{ i.date.day }}), {{ i.cost }},
+                        '{{ services[i.service_id-1].name }}']
                     j++;
                 {% endfor %}
                 var data = new google.visualization.DataTable();
+
                 data.addColumn('date', 'Дата снятия показания');
                 data.addColumn('number', 'Затраты(в руб.)');
+                data.addColumn('string', 'Услуга');
                 data.addRows(list);
 
                 var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
@@ -64,7 +62,7 @@
             }
         </script>
 
-        <div id='chart_div' class="section" style='width: 48%; margin-right: 0px'></div>
+        <div id='chart_div' class="section" style='width: 50%; margin-right: 0px'></div>
 
     </div>
 {% endblock %}
