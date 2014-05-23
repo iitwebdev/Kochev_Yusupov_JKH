@@ -6,6 +6,7 @@ from pyramid.view import view_config, forbidden_view_config
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.security import remember, authenticated_userid, forget
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
+from JKH.jkh.formulas import calculate_w_meter
 
 from .models import (
     DBSession,
@@ -15,6 +16,7 @@ from .models import (
     pas_gen, send_email,
     History, Service, Country, Region, Tarif)
 
+from .formulas import calculateWithMeter
 
 @forbidden_view_config()
 def forbidden_view(request):
@@ -79,7 +81,7 @@ def calculate_view(request):
         value = int(request.POST['value'])
         dateISO = (request.POST['date'])
         date = datetime.strptime(dateISO, "%Y-%m-%d").date()
-        cost = calculate(tarif, value)
+        cost = calculate_w_meter(tarif, value)
         history = History(user_id=get_current_user(request).id, service_id=tarif.service_id,
                           date=date, cost=cost)
         session.add(history)
@@ -93,8 +95,7 @@ def calculate_view(request):
             'login': True}
 
 
-def calculate(tarif, value):
-    return tarif.price * value
+
 
 
 @view_config(route_name='user', renderer='templates/user.jinja2')
