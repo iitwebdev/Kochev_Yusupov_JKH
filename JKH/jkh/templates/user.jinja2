@@ -4,7 +4,9 @@
 
     <a href="/calculate" class="button">Добавить показания</a>
 
-        <div style="overflow: auto; height: 500px; max-width: 1000px">
+    <div style="width: 90%">
+
+        <div class="section" style="overflow: auto; height: 500px; max-width: 1000px">
             <table id="hor-minimalist-a" class="tablesorter" cellspacing="1">
                 <thead>
                 <tr>
@@ -26,71 +28,46 @@
         </div>
 
 
-
-
-    <script type="text/javascript" src="\static\js\ddtf.js"></script>
+        <script type="text/javascript" src="\static\js\ddtf.js"></script>
         <script type="text/javascript" src="\static\js\jquery-latest.js"></script>
-    <script type="text/javascript" src="\static\js\jquery.tablesorter.js"></script>
-{#    <script src="https://jqueryjs.googlecode.com/files/jquery-1.2.6.js"></script>#}
+        <script type="text/javascript" src="\static\js\jquery.tablesorter.js"></script>
+        {#    <script src="https://jqueryjs.googlecode.com/files/jquery-1.2.6.js"></script>#}
 
-    <script>
-        $(document).ready(function () {
-            $("#hor-minimalist-a").tablesorter();
-        });
-    </script>
+        <script>
+            $(document).ready(function () {
+                $("#hor-minimalist-a").tablesorter();
+            });
+        </script>
 
 
 
+        <script type='text/javascript' src='http://www.google.com/jsapi'></script>
+        <script type='text/javascript'>
+            google.load('visualization', '1', {'packages': ['annotatedtimeline']});
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var list = []
+                {#                list[0] = ['Дата', 'Сумма']#}
+                var j = 0;
+                {% for i in history %}
+                    console.log({{ i.date.year}})
+                    list[j] = [new Date({{ i.date.year }}, {{ i.date.month }}, {{ i.date.day }}), {{ i.cost }}]
+                    j++;
+                {% endfor %}
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'Дата снятия показания');
+                data.addColumn('number', 'Затраты(в руб.)');
+                data.addRows(list);
+
+                var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+                chart.draw(data, {displayAnnotations: true});
+            }
+        </script>
+
+        <div id='chart_div' class="section" style='width: 48%; margin-right: 0px'></div>
+
+    </div>
 {% endblock %}
 
 
 
-
-
-
-{#    <form method="post">#}
-{#        <p>#}
-{#            <select id="countries" class="select" name="countries">#}
-{#                <option>Выберите Cтрану</option>#}
-{#                {% for country in countries %}#}
-{#                    <option value={{ country.id }} class={{ country.id }}>{{ country.name }}</option>#}
-{#                {% endfor %}#}
-{#            </select>#}
-{#        </p>#}
-{##}
-{##}
-{#        <p>#}
-{#            <select id="regions" class="select" name="regions">#}
-{#                <option>Выберите Регион</option>#}
-{#                {% for region in regions %}#}
-{#                    <option value={{ region.id }} class={{ region.country_id }}>{{ region.name }}</option>#}
-{#                {% endfor %}#}
-{#            </select>#}
-{#        </p>#}
-{##}
-{##}
-{#        <p>#}
-{#            <select id="tarifs" class="select" name="tarifs">#}
-{#                <option>Выберите Тариф</option>#}
-{#                {% for tarif in tarifs %}#}
-{#                    <option value={{ tarif.id }} class={{ tarif.region_id }}>{{ services[tarif.service_id-1] }}</option>#}
-{#                {% endfor %}#}
-{#            </select>#}
-{#        </p>#}
-{##}
-{#        <script src="http://code.jquery.com/jquery-latest.min.js"></script>#}
-{#        <script src="jquery.chained.js"></script>#}
-{#        <script type="text/javascript"#}
-{#                src="http://awesome-design.com/templates/awesome-design/js/jquery.chained.js"></script>#}
-{##}
-{#        <script>#}
-{#            $("#regions").chained("#countries");#}
-{#            $("#tarifs").chained("#regions");#}
-{#            $("#countries").chained("#regions");#}
-{#                $("#series").chained("#mark");#}
-{#        </script>#}
-{##}
-{##}
-{#        <p><input type="text" class="input" size="40" name="startValue"></p>#}
-{#        <input type="submit" class="button" value="Посчитать">#}
-{#    </form>#}

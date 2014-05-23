@@ -17,7 +17,6 @@ from .models import (
     History, Service, Country, Region, Tarif)
 
 
-
 @forbidden_view_config()
 def forbidden_view(request):
     # do not allow a user to login if they are already logged in
@@ -50,7 +49,8 @@ def get_current_user(request):
 @view_config(route_name='home', renderer='templates/home.jinja2')
 def my_view(request):
     if get_current_user(request):
-        return {'login': True}
+        return {'login': True,
+        }
     else:
         return {'login': False}
 
@@ -75,18 +75,28 @@ def calculate_view(request):
     tarifs = session.query(Tarif)
     services = session.query(Service).all()
     if 'contry' and 'region' and 'tarif' and 'value' and 'date' in request.POST:
-        # country = session.query(Country).filter(Country.id == int(request.POST['country'])).one()
-        # region = session.query(Region).filter(Region.id == int(request.POST['region'])).one()
-        tarif = tarifs.filter(Tarif.id == int(request.POST['tarif'])).one()
-        value = int(request.POST['value'])
-        dateISO = (request.POST['date'])
-        date = datetime.strptime(dateISO, "%Y-%m-%d").date()
-        cost = calculate_w_meter(tarif, value)
-        history = History(user_id=get_current_user(request).id, service_id=tarif.service_id,
-                          date=date, cost=cost)
-        session.add(history)
-        session.commit()
-        return HTTPFound(location=nxt)
+
+        if request.POST['date'] != '' and request.POST['value'] != '' and request.POST['country'] != '' and \
+                        request.POST['region'] != '' and request.POST['tarif'] != '':
+            tarif = tarifs.filter(Tarif.id == int(request.POST['tarif'])).one()
+            value = float(request.POST['value'])
+            dateISO = (request.POST['date'])
+            date = datetime.strptime(dateISO, "%Y-%m-%d").date()
+            cost = calculate_w_meter(tarif, value)
+            history = History(user_id=get_current_user(request).id, service_id=tarif.service_id,
+                              date=date, cost=cost)
+            session.add(history)
+            session.commit()
+            return HTTPFound(location=nxt)
+        else:
+            return {'project': 'JKH',
+                    'countries': countries,
+                    'regions': regions,
+                    'tarifs': tarifs.all(),
+                    'services': services,
+                    'login': True,
+                    'error': True
+            }
     return {'project': 'JKH',
             'countries': countries,
             'regions': regions,
@@ -95,14 +105,12 @@ def calculate_view(request):
             'login': True}
 
 
-
-
-
 @view_config(route_name='user', renderer='templates/user.jinja2')
 @auth_required
 def user_view(request):
     session = DBSession()
     history = session.query(History).filter(History.user_id == get_current_user(request).id)
+
     services = session.query(Service).all()
     return {
         'history': history,

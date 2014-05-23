@@ -644,10 +644,10 @@ footer .socialIcons a.twitter {
         margin-bottom: 0;
     }
 
-    /*.buttonCentered {*/
-    /*position: relative;*/
-    /*top: -15px;*/
-    /*}*/
 }
 
-
+.section {
+    width: 50%;
+    height: 500px;
+    float: left
+}

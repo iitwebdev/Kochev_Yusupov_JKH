@@ -38,11 +38,17 @@
             $("#tarifs").chained("#regions");
         </script>
 
+        <h3>Введите показания счетчика:</h3>
 
         <p><input type="text" class="input" size="40" name="value"></p>
+
         <p><input type="date" class="input" size="40" name="date"></p>
         <input type="submit" class="button" value="Посчитать">
     </form>
+
+    {% if error %}
+        <h3>Вы не заполнили одно из полей!</h3>
+    {% endif %}
 {% endblock %}
 
 

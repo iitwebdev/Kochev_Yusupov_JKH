@@ -3,7 +3,7 @@ def calculate_w_meter(tarif, value):
     """
     Расчет размера оплаты за услугу, для которой есть счетчик
     """
-    return tarif.price * value
+    return float(tarif.price) * float(value)
 
 
 def calc_otopl_wo_meter(tarif, norm, square):
